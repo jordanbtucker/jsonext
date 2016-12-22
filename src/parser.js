@@ -100,6 +100,9 @@ const lexStates = {
 			read()
 			lexState = 'comment'
 			return
+
+		case undefined:
+			return newToken('eof')
 		}
 
 		if (isSpaceSeparator(c)) {
@@ -131,14 +134,23 @@ const lexStates = {
 	},
 
 	multiLineComment () {
-		if (c === '*') {
+		switch (c) {
+		case '*':
 			lexState = 'multiLineCommentAsterisk'
+			break
+
+		case undefined:
+			throw invalidChar(c)
 		}
 
 		read()
 	},
 
 	multiLineCommentAsterisk () {
+		if (c === undefined) {
+			throw invalidChar(c)
+		}
+
 		read()
 		lexState = (c === '/') ? 'default' : 'multiLineComment'
 	},
@@ -151,6 +163,9 @@ const lexStates = {
 		case '\u2029':
 			lexState = 'default'
 			break
+
+		case undefined:
+			return newToken('eof')
 		}
 
 		read()
@@ -590,6 +605,9 @@ const lexStates = {
 		case '\u2029':
 			separatorChar(c)
 			break
+
+		case undefined:
+			throw invalidChar()
 		}
 
 		buffer += read()
@@ -783,6 +801,9 @@ function escape () {
 		}
 
 		return '\n'
+
+	case undefined:
+		throw invalidChar(c)
 	}
 
 	return read()
@@ -1026,10 +1047,18 @@ function invalidLexState (state) {
 }
 
 function invalidChar (c) {
+	if (c === undefined) {
+		return new SyntaxError(`JSONext: invalid end of input at ${line}:${column}`)
+	}
+
 	return new SyntaxError(`JSONext: invalid character '${c}' at ${line}:${column}`)
 }
 
 function invalidToken () {
+	if (token.type === 'eof') {
+		return new SyntaxError(`JSONext: invalid end of input at ${line}:${column}`)
+	}
+
 	const c = String.fromCodePoint(token.value.codePointAt(0))
 	return new SyntaxError(`JSONext: invalid character '${c}' at ${line}:${column}`)
 }
