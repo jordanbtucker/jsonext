@@ -239,7 +239,14 @@ const lexStates = {
 		case '"':
 		case "'":
 			doubleQuote = (read() === '"')
+			buffer = ''
 			lexState = 'string'
+			return
+
+		case '`':
+			read()
+			buffer = ''
+			lexState = 'template'
 			return
 		}
 
@@ -611,6 +618,51 @@ const lexStates = {
 		}
 
 		buffer += read()
+		return
+	},
+
+	template () {
+		switch (c) {
+		case '$':
+			buffer += read()
+			lexState = 'templateDollar'
+			return
+
+		case '\\':
+			read()
+			buffer += escape()
+			return
+
+		case '\r':
+			read()
+			if (peek() === '\n') {
+				read()
+			}
+
+			buffer += '\n'
+			return
+
+		case '`':
+			read()
+			return newToken('string', buffer)
+
+		case undefined:
+			throw invalidChar()
+		}
+
+		buffer += read()
+		return
+	},
+
+	templateDollar () {
+		switch (c) {
+		case '{':
+		case undefined:
+			throw invalidChar(c)
+		}
+
+		buffer += read()
+		lexState = 'template'
 		return
 	},
 

@@ -153,6 +153,28 @@ describe('Parser', function () {
 			})
 		})
 
+		describe('templates', function () {
+			it('should parse empty templates', function () {
+				assert.strictEqual('', JSONext.parse('``'))
+			})
+
+			it('should parse contents', function () {
+				assert.strictEqual('abc', JSONext.parse('`abc`'))
+			})
+
+			it('should parse dollar signs', function () {
+				assert.strictEqual('a$b', JSONext.parse('`a$b`'))
+			})
+
+			it('should parse escaped characters', function () {
+				assert.strictEqual('\b\f\n\r\t\v\0\x0f\u01FF\n\n\a\'\"A', JSONext.parse('`\\b\\f\\n\\r\\t\\v\\0\\x0f\\u01fF\\\n\\\r\n\\a\\\'\\"\\u{000041}`'))
+			})
+
+			it('should parse line breaks', function () {
+				assert.strictEqual('\n\n\n\u2028\u2029', JSONext.parse('`\n\r\r\n\u2028\u2029`'))
+			})
+		})
+
 		describe('comments', function () {
 			it('should parse single-line comments', function () {
 				assert.deepStrictEqual({}, JSONext.parse('{//comment\n}'))
