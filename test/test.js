@@ -230,5 +230,11 @@ describe('Parser', function () {
 				return (k === '1') ? undefined : v
 			}))
 		})
+
+		it('should modify the root value', function () {
+			assert.deepStrictEqual('revived', JSONext.parse('1', function (k, v) {
+				return (k === '') ? 'revived' : v
+			}))
+		})
 	})
 })
