@@ -22,14 +22,15 @@ describe('Parser', function () {
 			})
 
 			it('should parse special character property names', function () {
-				assert.deepStrictEqual({$: 1, _: 2, 'a\u200C': 3}, JSONext.parse('{$:1,_:2,a\u200C:3}'))
+				assert.deepStrictEqual({$_: 1, _$: 2, 'a\u200C': 3}, JSONext.parse('{$_:1,_$:2,a\u200C:3}'))
+			})
 
 			it('should parse unicode property names', function () {
 				assert.deepStrictEqual({ùńîċõďë: 9}, JSONext.parse('{ùńîċõďë:9}'))
 			})
 
 			it('should parse escaped property names', function () {
-				assert.deepStrictEqual({ab: 1}, JSONext.parse('{\\u0061\\u0062:1}'))
+				assert.deepStrictEqual({ab: 1, $_: 2, _$: 3}, JSONext.parse('{\\u0061\\u0062:1,\\u0024\\u005F:2,\\u005F\\u0024:3}'))
 			})
 
 			it('should parse multiple properties', function () {
@@ -95,15 +96,15 @@ describe('Parser', function () {
 			})
 
 			it('should parse exponents', function () {
-				assert.deepStrictEqual([1, 10, 10, 1, 1.1, 0.1], JSONext.parse('[1e0,1e1,1e01,1.e0,1.1e0,1e-1]'))
+				assert.deepStrictEqual([1, 10, 10, 1, 1.1, 0.1, 10], JSONext.parse('[1e0,1e1,1e01,1.e0,1.1e0,1e-1,1e+1]'))
 			})
 
 			it('should parse binary numbers', function () {
-				assert.deepStrictEqual([1, 2], JSONext.parse('[0b1,0b10]'))
+				assert.deepStrictEqual([1, 2, 3], JSONext.parse('[0b1,0b10,0b011]'))
 			})
 
 			it('should parse octal numbers', function () {
-				assert.deepStrictEqual([1, 8], JSONext.parse('[0o1,0o10]'))
+				assert.deepStrictEqual([1, 8, 9], JSONext.parse('[0o1,0o10,0o011]'))
 			})
 
 			it('should parse hexadecimal numbers', function () {
