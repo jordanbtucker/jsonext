@@ -2,8 +2,7 @@
 
 An *ext*ention of JSON that supports *Next* gen features.
 
-This pre-release version does not yet support `reviver` and only wraps
-`JSON.stringify`.
+This pre-release version wraps `JSON.stringify`.
 
 ## Current features
 
