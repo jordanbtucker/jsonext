@@ -136,7 +136,7 @@ describe('Parser', function () {
 			})
 
 			it('should parse nested quotes strings', function () {
-				assert.deepStrictEqual(['"', "'"], JSONext.parse(`['"',"'"]`))
+				assert.deepStrictEqual(['"', "'"], JSONext.parse('[\'"\',"\'"]'))
 			})
 
 			it('should parse escaped characters', function () {
