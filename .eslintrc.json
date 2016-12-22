@@ -1,0 +1,22 @@
+{
+	"extends": "standard",
+	"installedESLint": true,
+	"plugins": [
+		"standard",
+		"promise"
+	],
+	"env": {
+		"es6": true
+	},
+	"rules": {
+		"comma-dangle": [
+			"error",
+			"always-multiline"
+		],
+		"indent": [
+			"error",
+			"tab"
+		],
+		"no-tabs": "off"
+	}
+}

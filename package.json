@@ -1,10 +1,14 @@
 {
   "name": "jsonext",
-  "version": "0.0.1-beta",
+  "version": "0.0.2-beta",
   "description": "An extension of JSON that supports the next generation of ECMAScript features",
-  "main": "lib/",
+  "main": "src/",
+  "files": [
+    "src/"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . --fix",
+    "test": "nyc --reporter=html --reporter=text mocha"
   },
   "repository": {
     "type": "git",
@@ -24,5 +28,14 @@
   "bugs": {
     "url": "https://github.com/jordanbtucker/jsonext/issues"
   },
-  "homepage": "https://github.com/jordanbtucker/jsonext#readme"
+  "homepage": "https://github.com/jordanbtucker/jsonext#readme",
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "mocha": "^3.2.0",
+    "nyc": "^10.0.0",
+    "sinon": "^1.17.6"
+  }
 }
