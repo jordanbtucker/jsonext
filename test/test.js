@@ -192,6 +192,43 @@ describe('Parser', function () {
 		it('should parse whitespace', function () {
 			assert.deepEqual({}, JSONext.parse('{\t\v\f \u00A0\uFEFF\n\r\u2028\u2029\u2003}'))
 		})
+	})
 
+	describe('#parse(text, reviver)', function () {
+		it('should modify property values', function () {
+			assert.deepStrictEqual({a: 'revived', b: 2}, JSONext.parse('{a:1,b:2}', function (k, v) {
+				return (k === 'a') ? 'revived' : v
+			}))
+		})
+
+		it('should modify nested object property values', function () {
+			assert.deepStrictEqual({a: {b: 'revived'}}, JSONext.parse('{a:{b:2}}', function (k, v) {
+				return (k === 'b') ? 'revived' : v
+			}))
+		})
+
+		it('should delete property values', function () {
+			assert.deepStrictEqual({b: 2}, JSONext.parse('{a:1,b:2}', function (k, v) {
+				return (k === 'a') ? undefined : v
+			}))
+		})
+
+		it('should modify array values', function () {
+			assert.deepStrictEqual([0, 'revived', 2], JSONext.parse('[0,1,2]', function (k, v) {
+				return (k === '1') ? 'revived' : v
+			}))
+		})
+
+		it('should modify nested array values', function () {
+			assert.deepStrictEqual([0, [1, 2, 'revived']], JSONext.parse('[0,[1,2,3]]', function (k, v) {
+				return (k === '2') ? 'revived' : v
+			}))
+		})
+
+		it('should delete array values', function () {
+			assert.deepStrictEqual([0, , 2], JSONext.parse('[0,1,2]', function (k, v) {
+				return (k === '1') ? undefined : v
+			}))
+		})
 	})
 })

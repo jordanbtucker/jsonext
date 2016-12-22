@@ -10,7 +10,7 @@ let token
 let key
 let root
 
-function parse (t) {
+function parse (t, r) {
 	text = String(t)
 	parseState = 'start'
 	stack = []
@@ -30,6 +30,10 @@ function parse (t) {
 
 		parseStates[parseState]()
 	} while (token.type !== 'eof')
+
+	if (r) {
+		return JSON.parse(JSON.stringify(root), r)
+	}
 
 	return root
 }
