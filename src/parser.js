@@ -753,13 +753,14 @@ const lexStates = {
 		throw invalidChar(c)
 	},
 
-	end () {
-		if (c === undefined) {
-			return newToken('eof')
-		}
+	// This code is unreachable since lexState is never set to 'end'
+	// end () {
+	// 	if (c === undefined) {
+	// 		return newToken('eof')
+	// 	}
 
-		throw invalidChar(c)
-	},
+	// 	throw invalidChar(c)
+	// },
 }
 
 function isSpaceSeparator (c) {
