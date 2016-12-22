@@ -1,6 +1,6 @@
 const unicode = require('./unicode')
 
-let text
+let source
 let parseState
 let stack
 let pos
@@ -10,8 +10,8 @@ let token
 let key
 let root
 
-function parse (t, reviver) {
-	text = String(t)
+function parse (text, reviver) {
+	source = String(text)
 	parseState = 'start'
 	stack = []
 	pos = 0
@@ -80,8 +80,8 @@ function lex () {
 }
 
 function peek () {
-	if (text[pos]) {
-		return String.fromCodePoint(text.codePointAt(pos))
+	if (source[pos]) {
+		return String.fromCodePoint(source.codePointAt(pos))
 	}
 }
 
