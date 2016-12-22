@@ -236,5 +236,11 @@ describe('Parser', function () {
 				return (k === '') ? 'revived' : v
 			}))
 		})
+
+		it('should set `this` to the parent value', function () {
+			assert.deepStrictEqual({a: {b: 'revived'}}, JSONext.parse('{a:{b:2}}', function (k, v) {
+				return (k === 'b' && this.b) ? 'revived' : v
+			}))
+		})
 	})
 })
