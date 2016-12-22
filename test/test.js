@@ -23,6 +23,9 @@ describe('Parser', function () {
 
 			it('should parse special character property names', function () {
 				assert.deepStrictEqual({$: 1, _: 2, 'a\u200C': 3}, JSONext.parse('{$:1,_:2,a\u200C:3}'))
+
+			it('should parse unicode property names', function () {
+				assert.deepStrictEqual({ùńîċõďë: 9}, JSONext.parse('{ùńîċõďë:9}'))
 			})
 
 			it('should parse escaped property names', function () {
@@ -186,7 +189,7 @@ describe('Parser', function () {
 		})
 
 		it('should parse whitespace', function () {
-			assert.deepEqual({}, JSONext.parse('{\t\v\f \u00A0\uFEFF\n\r\u2028\u2029}'))
+			assert.deepEqual({}, JSONext.parse('{\t\v\f \u00A0\uFEFF\n\r\u2028\u2029\u2003}'))
 		})
 
 		// it('should support multi-line comments', function () {

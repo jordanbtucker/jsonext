@@ -1,3 +1,5 @@
+const unicode = require('./unicode')
+
 let text
 let parseState
 let stack
@@ -761,15 +763,20 @@ const lexStates = {
 }
 
 function isSpaceSeparator (c) {
-	return /\s/.test(c)
+	return unicode.Space_Separator.test(c)
 }
 
 function isIdStartChar (c) {
-	return /[A-Za-z]/.test(c)
+	return (c >= 'a' && c <= 'z') ||
+	(c >= 'A' && c <= 'Z') ||
+	unicode.ID_Start.test(c)
 }
 
 function isIdContinueChar (c) {
-	return /[0-9A-Za-z]/.test(c)
+	return (c >= 'a' && c <= 'z') ||
+	(c >= 'A' && c <= 'Z') ||
+	(c >= '0' && c <= '9') ||
+	unicode.ID_Continue.test(c)
 }
 
 function isDigit (c) {
