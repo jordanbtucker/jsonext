@@ -10,7 +10,7 @@ let token
 let key
 let root
 
-function parse (t, r) {
+function parse (t, reviver) {
 	text = String(t)
 	parseState = 'start'
 	stack = []
@@ -31,11 +31,27 @@ function parse (t, r) {
 		parseStates[parseState]()
 	} while (token.type !== 'eof')
 
-	if (r) {
-		return JSON.parse(JSON.stringify(root), r)
+	if (typeof reviver === 'function') {
+		return internalize({'': root}, '', reviver)
 	}
 
 	return root
+}
+
+function internalize (holder, name, reviver) {
+	const value = holder[name]
+	if (value != null && typeof value === 'object') {
+		for (const key in value) {
+			const replacement = internalize(value, key, reviver)
+			if (replacement === undefined) {
+				delete value[key]
+			} else {
+				value[key] = replacement
+			}
+		}
+	}
+
+	return reviver.call(holder, name, value)
 }
 
 let lexState
