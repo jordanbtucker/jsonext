@@ -193,22 +193,5 @@ describe('Parser', function () {
 			assert.deepEqual({}, JSONext.parse('{\t\v\f \u00A0\uFEFF\n\r\u2028\u2029\u2003}'))
 		})
 
-		// it('should support multi-line comments', function () {
-		// 	assert.deepEqual({}, JSONext.parse(fs.readFileSync('test/cases/multi-line-comment.jsonext')))
-		// })
-
-		// it('should support single-line comments', function () {
-		// 	assert.deepEqual({}, JSONext.parse(fs.readFileSync('test/cases/single-line-comment.jsonext')))
-		// })
-
-		// it('should throw on invalid comments', function () {
-		// 	assert.throws(function () {
-		// 		assert.fail(JSONext.parse(fs.readFileSync('test/cases/invalid-comment.jsonext')))
-		// 	})
-		// })
-
-		// it('should parse nested objects', function () {
-		// 	assert.deepEqual([{}], JSONext.parse('[{}]'))
-		// })
 	})
 })
