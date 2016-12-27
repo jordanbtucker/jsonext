@@ -1,12 +1,13 @@
 {
   "name": "jsonext",
-  "version": "0.0.7-beta",
+  "version": "0.0.8-beta",
   "description": "An extension of JSON that supports the Next gen features",
   "main": "lib/",
   "files": [
     "lib/"
   ],
   "scripts": {
+    "prepublish": "npm run build",
     "build": "node build.js && babel src -d lib",
     "lint": "eslint build.js src/ --fix",
     "test": "cross-env NODE_ENV=test npm run build && nyc --reporter=html --reporter=text mocha"
