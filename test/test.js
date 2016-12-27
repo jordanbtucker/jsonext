@@ -243,4 +243,212 @@ describe('Parser', function () {
 			}))
 		})
 	})
+
+	describe('#stringify', function () {
+		describe('objects', function () {
+			it('should stringify empty objects', function () {
+				assert.strictEqual('{}', JSONext.stringify({}))
+			})
+
+			it('should stringify unquoted property names', function () {
+				assert.strictEqual('{a:1}', JSONext.stringify({a: 1}))
+			})
+
+			it('should stringify single quoted string property names', function () {
+				assert.strictEqual("{'a-b':1}", JSONext.stringify({'a-b': 1}))
+			})
+
+			it('should stringify double quoted string property names', function () {
+				assert.strictEqual('{"a\'":1}', JSONext.stringify({"a'": 1}))
+			})
+
+			it('should stringify special character property names', function () {
+				assert.strictEqual('{$_:1,_$:2,a\u200C:3}', JSONext.stringify({$_: 1, _$: 2, 'a\u200C': 3}))
+			})
+
+			it('should stringify unicode property names', function () {
+				assert.strictEqual('{ùńîċõďë:9}', JSONext.stringify({'ùńîċõďë': 9}))
+			})
+
+			it('should stringify escaped property names', function () {
+				assert.strictEqual("{'\\b\\f\\n\\r\\t\\v\\0\\x01':1}", JSONext.stringify({'\b\f\n\r\t\v\0\x01': 1}))
+			})
+
+			it('should stringify multiple properties', function () {
+				assert.strictEqual('{abc:1,def:2}', JSONext.stringify({abc: 1, def: 2}))
+			})
+
+			it('should stringify nested objects', function () {
+				assert.strictEqual('{a:{b:2}}', JSONext.stringify({a: {b: 2}}))
+			})
+		})
+
+		describe('arrays', function () {
+			it('should stringify empty arrays', function () {
+				assert.strictEqual('[]', JSONext.stringify([]))
+			})
+
+			it('should stringify array values', function () {
+				assert.strictEqual('[1]', JSONext.stringify([1]))
+			})
+
+			it('should stringify multiple array values', function () {
+				assert.strictEqual('[1,2]', JSONext.stringify([1, 2]))
+			})
+
+			it('should stringify nested arrays', function () {
+				assert.strictEqual('[1,[2,3]]', JSONext.stringify([1, [2, 3]]))
+			})
+		})
+
+		it('should stringify nulls', function () {
+			assert.strictEqual('null', JSONext.stringify(null))
+		})
+
+		it('should stringify true', function () {
+			assert.strictEqual('true', JSONext.stringify(true))
+		})
+
+		it('should stringify false', function () {
+			assert.strictEqual('false', JSONext.stringify(false))
+		})
+
+		it('should return undefined for functions', function () {
+			assert.strictEqual(undefined, JSONext.stringify(function () {}))
+		})
+
+		it('should return null for functions in arrays', function () {
+			assert.strictEqual('[null]', JSONext.stringify([function () {}]))
+		})
+
+		describe('numbers', function () {
+			it('should stringify numbers', function () {
+				assert.strictEqual('-1.2', JSONext.stringify(-1.2))
+			})
+
+			it('should stringify null for non-finite numbers', function () {
+				assert.strictEqual('[null,null]', JSONext.stringify([Infinity, NaN]))
+			})
+		})
+
+		describe('strings', function () {
+			it('should stringify single quoted strings', function () {
+				assert.strictEqual("'abc'", JSONext.stringify('abc'))
+			})
+
+			it('should stringify double quoted strings', function () {
+				assert.strictEqual('"abc\'"', JSONext.stringify("abc'"))
+			})
+
+			it('should stringify template strings', function () {
+				assert.strictEqual('`abc\'"`', JSONext.stringify('abc\'"'))
+			})
+
+			it('should stringify escaped characters', function () {
+				assert.strictEqual("'\\b\\f\\n\\r\\t\\v\\0\\x0f'", JSONext.stringify('\b\f\n\r\t\v\0\x0f'))
+			})
+
+			it('should stringify escaped single quotes', function () {
+				assert.strictEqual("'\\'\"`'", JSONext.stringify('\'"`'))
+			})
+
+			it('should stringify escaped double quotes', function () {
+				assert.strictEqual('"\'\'\\"`"', JSONext.stringify('\'\'"`'))
+			})
+
+			it('should stringify escaped backtick quotes', function () {
+				assert.strictEqual('`\'\'""\\``', JSONext.stringify('\'\'""`'))
+			})
+
+			it('should stringify escaped line and paragraph separators', function () {
+				assert.strictEqual("'\\u2028\\u2029'", JSONext.stringify('\u2028\u2029'))
+			})
+		})
+
+		it('should stringify using built-in toJSON methods', function () {
+			assert.strictEqual("'2016-01-01T00:00:00.000Z'", JSONext.stringify(new Date('2016-01-01T00:00:00.000Z')))
+		})
+
+		it('should stringify using user defined toJSON methods', function () {
+			RegExp.prototype.toJSON = RegExp.prototype.toString
+			assert.strictEqual("'/a/'", JSONext.stringify(/a/))
+			RegExp.prototype.toJSON = undefined
+		})
+
+		it('should stringify using user defined toJSON(key) methods', function () {
+			let C = function () {}
+			C.prototype.toJSON = function (key) { return (key === 'a') ? 1 : 2 }
+			assert.strictEqual('{a:1,b:2}', JSONext.stringify({a: new C(), b: new C()}))
+		})
+
+		it('should stringify using toJSONext methods', function () {
+			RegExp.prototype.toJSONext = RegExp.prototype.toString
+			assert.strictEqual("'/a/'", JSONext.stringify(/a/))
+			RegExp.prototype.toJSONext = undefined
+		})
+
+		it('should stringify using toJSONext(key) methods', function () {
+			let C = function () {}
+			C.prototype.toJSONext = function (key) { return (key === 'a') ? 1 : 2 }
+			assert.strictEqual('{a:1,b:2}', JSONext.stringify({a: new C(), b: new C()}))
+		})
+	})
+
+	describe('#stringify(space)', function () {
+		it('should not indent when no value is provided', function () {
+			assert.strictEqual('[1]', JSONext.stringify([1]))
+		})
+
+		it('should not indent when 0 is provided', function () {
+			assert.strictEqual('[1]', JSONext.stringify([1], null, 0))
+		})
+
+		it('should not indent when an empty string is provided', function () {
+			assert.strictEqual('[1]', JSONext.stringify([1], null, ''))
+		})
+
+		it('should indent n spaces when a number is provided', function () {
+			assert.strictEqual('[\n  1,\n]', JSONext.stringify([1], null, 2))
+		})
+
+		it('should not indent more than 10 spaces when a number is provided', function () {
+			assert.strictEqual('[\n          1,\n]', JSONext.stringify([1], null, 11))
+		})
+
+		it('should indent with the string provided', function () {
+			assert.strictEqual('[\n\t1,\n]', JSONext.stringify([1], null, '\t'))
+		})
+
+		it('should not indent more than 10 characters of the string provided', function () {
+			assert.strictEqual('[\n          1,\n]', JSONext.stringify([1], null, '           '))
+		})
+
+		it('should indent in arrays', function () {
+			assert.strictEqual('[\n  1,\n]', JSONext.stringify([1], null, 2))
+		})
+
+		it('should indent in nested arrays', function () {
+			assert.strictEqual('[\n  1,\n  [\n    2,\n  ],\n  3,\n]', JSONext.stringify([1, [2], 3], null, 2))
+		})
+
+		it('should indent in objects', function () {
+			assert.strictEqual('{\n  a: 1,\n}', JSONext.stringify({a: 1}, null, 2))
+		})
+
+		it('should indent in nested objects', function () {
+			assert.strictEqual('{\n  a: {\n    b: 2,\n  },\n}', JSONext.stringify({a: {b: 2}}, null, 2))
+		})
+	})
+
+	describe('#stringify(replacer)', function () {
+		it('should filter keys when an array is provided', function () {
+			assert.strictEqual("{a:1,'0':3}", JSONext.stringify({a: 1, b: 2, 0: 3}, ['a', 0]))
+		})
+
+		it('should replace values when a function is provided', function () {
+			assert.strictEqual('{a:2,b:2}', JSONext.stringify({a: 1, b: 2}, function (key, value) {
+				return (key === 'a') ? 2 : value
+			}))
+		})
+	})
 })
