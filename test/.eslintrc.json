@@ -1,5 +1,10 @@
 {
 	"env": {
 		"mocha": true
+	},
+	"rules": {
+		"no-extend-native": "off",
+		"no-sparse-arrays": "off",
+		"no-useless-escape": "off"
 	}
 }
