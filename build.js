@@ -1,5 +1,7 @@
 /* eslint camelcase: "off" */
 
+'use strict'
+
 const fs = require('fs')
 const regenerate = require('regenerate')
 
