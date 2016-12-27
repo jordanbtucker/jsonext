@@ -1,7 +1,7 @@
 {
   "name": "jsonext",
-  "version": "0.0.6-beta",
-  "description": "An extension of JSON that supports the next generation of ECMAScript features",
+  "version": "0.0.7-beta",
+  "description": "An extension of JSON that supports the Next gen features",
   "main": "lib/",
   "files": [
     "lib/"
