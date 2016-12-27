@@ -29,7 +29,7 @@ write({
 })
 
 function write (data) {
-	const path = 'src/unicode.js'
+	const path = 'lib/unicode.js'
 	fs.writeFileSync(path, 'module.exports = {\n')
 	for (const key in data) {
 		fs.appendFileSync(path, `${key}: /${data[key]}/,\n`)
