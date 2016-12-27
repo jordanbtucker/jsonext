@@ -452,3 +452,10 @@ describe('JSONext', function () {
 		})
 	})
 })
+
+describe('require(*.jsonext)', function () {
+	it('should parse a JSONext document', function () {
+		require('../lib/register')
+		assert.deepStrictEqual({a: 1, b: 2}, require('./test.jsonext'))
+	})
+})

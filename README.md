@@ -34,6 +34,19 @@ Parses JSONext text into an ECMAScript value.
 
 Returns a string in JSONext format representing an ECMAScript value.
 
+## File extension
+
+JSONext uses the file extension `.jsonext`. You can `require` JSONext files
+with the following:
+
+```js
+// Register the .jsonext file extension.
+require('jsonext/register')
+
+// Load a JSONext file directly.
+const config = require('./config.jsonext')
+```
+
 ## Current features
 
 ### JSON5 syntax
