@@ -26,7 +26,7 @@ describe('Parser', function () {
 			})
 
 			it('should parse unicode property names', function () {
-				assert.deepStrictEqual({ùńîċõďë: 9}, JSONext.parse('{ùńîċõďë:9}'))
+				assert.deepStrictEqual({'ùńîċõďë': 9}, JSONext.parse('{ùńîċõďë:9}'))
 			})
 
 			it('should parse escaped property names', function () {
