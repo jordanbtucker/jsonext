@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "prepublish": "npm run build",
-    "build": "node build.js && babel src -d lib",
+    "build": "node build.js && babel src -d lib && browserify src/index.js -o dist/jsonext.js -s JSONext -t [ babelify --presets [ es2015 ] ]",
     "lint": "eslint build.js src/ --fix",
     "test": "cross-env NODE_ENV=test npm run build && nyc --reporter=html --reporter=text mocha"
   },
@@ -36,6 +36,8 @@
     "babel-plugin-istanbul": "^3.0.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-register": "^6.18.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
     "cross-env": "^3.1.3",
     "eslint": "^3.12.2",
     "eslint-config-standard": "^6.2.1",
