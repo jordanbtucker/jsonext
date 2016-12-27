@@ -2,7 +2,7 @@ const assert = require('assert')
 const sinon = require('sinon')
 const JSONext = require('../lib/')
 
-describe('Parser', function () {
+describe('JSONext', function () {
 	describe('#parse()', function () {
 		describe('objects', function () {
 			it('should parse empty objects', function () {
