@@ -1,6 +1,6 @@
 const assert = require('assert')
 const sinon = require('sinon')
-const JSONext = require('../src/')
+const JSONext = require('../lib/')
 
 describe('Parser', function () {
 	describe('#parse()', function () {
