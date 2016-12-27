@@ -1,4 +1,4 @@
-const unicode = require('./unicode')
+const util = require('./util')
 
 let source
 let parseState
@@ -127,7 +127,7 @@ const lexStates = {
 			return newToken('eof')
 		}
 
-		if (isSpaceSeparator(c)) {
+		if (util.isSpaceSeparator(c)) {
 			read()
 			return
 		}
@@ -288,7 +288,7 @@ const lexStates = {
 			break
 
 		default:
-			if (!isIdStartChar(u)) {
+			if (!util.isIdStartChar(u)) {
 				throw invalidIdentifier()
 			}
 
@@ -315,7 +315,7 @@ const lexStates = {
 			return
 		}
 
-		if (isIdContinueChar(c)) {
+		if (util.isIdContinueChar(c)) {
 			buffer += read()
 			return
 		}
@@ -338,7 +338,7 @@ const lexStates = {
 			break
 
 		default:
-			if (!isIdContinueChar(u)) {
+			if (!util.isIdContinueChar(u)) {
 				throw invalidIdentifier()
 			}
 
@@ -434,7 +434,7 @@ const lexStates = {
 			return
 		}
 
-		if (isDigit(c)) {
+		if (util.isDigit(c)) {
 			buffer += read()
 			return
 		}
@@ -443,7 +443,7 @@ const lexStates = {
 	},
 
 	decimalPointLeading () {
-		if (isDigit(c)) {
+		if (util.isDigit(c)) {
 			buffer += read()
 			lexState = 'decimalFraction'
 			return
@@ -461,7 +461,7 @@ const lexStates = {
 			return
 		}
 
-		if (isDigit(c)) {
+		if (util.isDigit(c)) {
 			buffer += read()
 			lexState = 'decimalFraction'
 			return
@@ -479,7 +479,7 @@ const lexStates = {
 			return
 		}
 
-		if (isDigit(c)) {
+		if (util.isDigit(c)) {
 			buffer += read()
 			return
 		}
@@ -496,7 +496,7 @@ const lexStates = {
 			return
 		}
 
-		if (isDigit(c)) {
+		if (util.isDigit(c)) {
 			buffer += read()
 			lexState = 'decimalExponentInteger'
 			return
@@ -506,7 +506,7 @@ const lexStates = {
 	},
 
 	decimalExponentSign () {
-		if (isDigit(c)) {
+		if (util.isDigit(c)) {
 			buffer += read()
 			lexState = 'decimalExponentInteger'
 			return
@@ -516,7 +516,7 @@ const lexStates = {
 	},
 
 	decimalExponentInteger () {
-		if (isDigit(c)) {
+		if (util.isDigit(c)) {
 			buffer += read()
 			return
 		}
@@ -583,7 +583,7 @@ const lexStates = {
 	},
 
 	hexadecimal () {
-		if (isHexDigit(c)) {
+		if (util.isHexDigit(c)) {
 			buffer += read()
 			lexState = 'hexadecimalInteger'
 			return
@@ -593,7 +593,7 @@ const lexStates = {
 	},
 
 	hexadecimalInteger () {
-		if (isHexDigit(c)) {
+		if (util.isHexDigit(c)) {
 			buffer += read()
 			return
 		}
@@ -724,7 +724,7 @@ const lexStates = {
 			return
 		}
 
-		if (isIdStartChar(c)) {
+		if (util.isIdStartChar(c)) {
 			buffer += read()
 			lexState = 'identifierName'
 			return
@@ -781,31 +781,6 @@ const lexStates = {
 
 	// 	throw invalidChar(c)
 	// },
-}
-
-function isSpaceSeparator (c) {
-	return unicode.Space_Separator.test(c)
-}
-
-function isIdStartChar (c) {
-	return (c >= 'a' && c <= 'z') ||
-	(c >= 'A' && c <= 'Z') ||
-	unicode.ID_Start.test(c)
-}
-
-function isIdContinueChar (c) {
-	return (c >= 'a' && c <= 'z') ||
-	(c >= 'A' && c <= 'Z') ||
-	(c >= '0' && c <= '9') ||
-	unicode.ID_Continue.test(c)
-}
-
-function isDigit (c) {
-	return /[0-9]/.test(c)
-}
-
-function isHexDigit (c) {
-	return /[0-9A-Fa-f]/.test(c)
 }
 
 function newToken (type, value) {
@@ -893,14 +868,14 @@ function hexEscape () {
 	let buffer = ''
 	let c = peek()
 
-	if (!isHexDigit(c)) {
+	if (!util.isHexDigit(c)) {
 		throw invalidChar(c)
 	}
 
 	buffer += read()
 
 	c = peek()
-	if (!isHexDigit(c)) {
+	if (!util.isHexDigit(c)) {
 		throw invalidChar(c)
 	}
 
@@ -925,7 +900,7 @@ function unicodeCodeUnitEscape () {
 
 	while (count-- > 0) {
 		const c = peek()
-		if (!isHexDigit(c)) {
+		if (!util.isHexDigit(c)) {
 			throw invalidChar(c)
 		}
 
@@ -939,13 +914,13 @@ function unicodeCodePointEscape () {
 	let buffer = ''
 
 	let c = peek()
-	if (!isHexDigit(c)) {
+	if (!util.isHexDigit(c)) {
 		throw invalidChar(c)
 	}
 
 	buffer += read()
 
-	while (isHexDigit(c = peek())) {
+	while (util.isHexDigit(c = peek())) {
 		buffer += read()
 	}
 
