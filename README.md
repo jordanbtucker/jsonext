@@ -2,8 +2,6 @@
 
 An *ext*ention of JSON that supports *Next* gen features.
 
-This pre-release version wraps `JSON.stringify`.
-
 ## Current features
 
 ### JSON5 syntax
