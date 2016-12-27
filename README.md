@@ -4,6 +4,36 @@
 
 An *ext*ention of JSON that supports *Next* gen features.
 
+## Usage
+
+### Node
+
+```bash
+npm install --save jsonext
+```
+
+```js
+const JSONext = require('jsonext')
+```
+
+### Browser
+
+```html
+<script src="https://unpkg.com/jsonext/dist/jsonext.js"></script>
+```
+
+## API
+
+The JSONext API is compatible with the [JSON API].
+
+### `JSONext.parse(text [, reviver])`
+
+Parses JSONext text into an ECMAScript value.
+
+### `JSONext.stringify(value [, replacer [, space]])`
+
+Returns a string in JSONext format representing an ECMAScript value.
+
 ## Current features
 
 ### JSON5 syntax
@@ -61,3 +91,5 @@ The following document is invalid.
 ```js
 { invalidTemplate: `Jane said, "${message}"` }
 ```
+
+[JSON API]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON#Methods
