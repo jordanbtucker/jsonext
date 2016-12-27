@@ -18,8 +18,20 @@ const JSONext = require('jsonext')
 
 ### Browser
 
+Using the [unpkg] CDN.
+
 ```html
 <script src="https://unpkg.com/jsonext/dist/jsonext.js"></script>
+```
+
+Using npm.
+
+```bash
+npm install --save jsonext
+```
+
+```html
+<script src="/node_modules/jsonext/dist/jsonext.js"></script>
 ```
 
 ## API
@@ -105,4 +117,5 @@ The following document is invalid.
 { invalidTemplate: `Jane said, "${message}"` }
 ```
 
+[unpkg]: https://unpkg.com/
 [JSON API]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON#Methods
