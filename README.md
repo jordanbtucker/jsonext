@@ -34,6 +34,11 @@ npm install --save jsonext
 <script src="/node_modules/jsonext/dist/jsonext.js"></script>
 ```
 
+#### Bower
+
+JSONext is not registered with Bower because it requires committing generated
+files to the the Git repository, [which is a bad thing][1].
+
 ## API
 
 The JSONext API is compatible with the [JSON API].
@@ -119,3 +124,4 @@ The following document is invalid.
 
 [unpkg]: https://unpkg.com/
 [JSON API]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON#Methods
+[1]: https://medium.com/@kentcdodds/why-i-don-t-commit-generated-files-to-master-a4d76382564#.vd308mxkn
