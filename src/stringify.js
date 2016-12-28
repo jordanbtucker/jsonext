@@ -241,6 +241,4 @@ function serializeArray (value) {
 	return final
 }
 
-module.exports = {
-	stringify,
-}
+module.exports = stringify

@@ -1,9 +1,9 @@
-const Parser = require('./parser')
-const Stringifier = require('./stringifier')
+const parse = require('./parse')
+const stringify = require('./stringify')
 
 const JSONext = {
-	parse: Parser.parse,
-	stringify: Stringifier.stringify,
+	parse,
+	stringify,
 }
 
 module.exports = JSONext

@@ -1130,6 +1130,4 @@ function separatorChar (c) {
 	console.warn(`JSONext: '${c}' is not valid ECMAScript; consider escaping`)
 }
 
-module.exports = {
-	parse,
-}
+module.exports = parse
