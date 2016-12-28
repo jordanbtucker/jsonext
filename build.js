@@ -3,7 +3,11 @@
 'use strict'
 
 const fs = require('fs')
+const path = require('path')
 const regenerate = require('regenerate')
+
+const outdir = 'lib'
+const outfile = 'unicode.js'
 
 const Space_Separator = regenerate()
 .add(require('unicode-9.0.0/General_Category/Space_Separator/code-points'))
@@ -29,10 +33,15 @@ write({
 })
 
 function write (data) {
-	const path = 'lib/unicode.js'
-	fs.writeFileSync(path, 'module.exports = {\n')
-	for (const key in data) {
-		fs.appendFileSync(path, `${key}: /${data[key]}/,\n`)
+	if (!fs.existsSync(outdir)) {
+		fs.mkdirSync(outdir)
 	}
-	fs.appendFileSync(path, '}\n')
+
+	const outpath = path.join(outdir, outfile)
+	fs.writeFileSync(outpath, 'module.exports = {\n')
+	for (const key in data) {
+		fs.appendFileSync(outpath, `${key}: /${data[key]}/,\n`)
+	}
+
+	fs.appendFileSync(outpath, '}\n')
 }
