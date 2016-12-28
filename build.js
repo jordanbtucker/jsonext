@@ -39,7 +39,6 @@ function buildUnicode () {
 
 	const outDir = libDir
 	const outPath = path.join(outDir, 'unicode.js')
-	console.log(outPath)
 
 	if (!fs.existsSync(outDir)) {
 		fs.mkdirSync(outDir)
