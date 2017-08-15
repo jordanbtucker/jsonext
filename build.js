@@ -21,21 +21,21 @@ function clean () {
 
 function buildUnicode () {
 	const Space_Separator = regenerate()
-	.add(require('unicode-9.0.0/General_Category/Space_Separator/code-points'))
-	.remove('\t', '\v', '\f', ' ', '\u00A0', '\uFEFF')
+		.add(require('unicode-9.0.0/General_Category/Space_Separator/code-points'))
+		.remove('\t', '\v', '\f', ' ', '\u00A0', '\uFEFF')
 
 	const ID_Start = regenerate()
-	.add(require('unicode-9.0.0/Binary_Property/ID_Start/code-points'))
-	.remove('$', '_')
-	.removeRange('A', 'Z')
-	.removeRange('a', 'z')
+		.add(require('unicode-9.0.0/Binary_Property/ID_Start/code-points'))
+		.remove('$', '_')
+		.removeRange('A', 'Z')
+		.removeRange('a', 'z')
 
 	const ID_Continue = regenerate()
-	.add(require('unicode-9.0.0/Binary_Property/ID_Continue/code-points'))
-	.remove('$', '_')
-	.removeRange('0', '9')
-	.removeRange('A', 'Z')
-	.removeRange('a', 'z')
+		.add(require('unicode-9.0.0/Binary_Property/ID_Continue/code-points'))
+		.remove('$', '_')
+		.removeRange('0', '9')
+		.removeRange('A', 'Z')
+		.removeRange('a', 'z')
 
 	const outDir = libDir
 	const outPath = path.join(outDir, 'unicode.js')
@@ -85,9 +85,9 @@ function buildBrowserify () {
 	}
 
 	browserify(inPath)
-	.transform('babelify', {presets: ['es2015']})
-	.bundle()
-	.pipe(fs.createWriteStream(outPath))
+		.transform('babelify', {presets: ['es2015']})
+		.bundle()
+		.pipe(fs.createWriteStream(outPath))
 }
 
 clean()

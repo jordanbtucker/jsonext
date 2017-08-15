@@ -297,7 +297,6 @@ const lexStates = {
 
 		buffer += u
 		lexState = 'identifierName'
-		return
 	},
 
 	identifierName () {
@@ -347,7 +346,6 @@ const lexStates = {
 
 		buffer += u
 		lexState = 'identifierName'
-		return
 	},
 
 	sign () {
@@ -640,7 +638,6 @@ const lexStates = {
 		}
 
 		buffer += read()
-		return
 	},
 
 	template () {
@@ -673,7 +670,6 @@ const lexStates = {
 		}
 
 		buffer += read()
-		return
 	},
 
 	templateDollar () {
@@ -685,7 +681,6 @@ const lexStates = {
 
 		buffer += read()
 		lexState = 'template'
-		return
 	},
 
 	start () {

@@ -1,14 +1,26 @@
 {
-	"extends": "standard",
-	"installedESLint": true,
-	"plugins": [
-		"standard",
-		"promise"
-	],
+	"root": true,
 	"env": {
+		"node": true,
 		"es6": true
 	},
+	"plugins": [
+		"node",
+		"standard"
+	],
+	"extends": [
+		"standard",
+		"plugin:node/recommended"
+	],
 	"rules": {
+		"array-bracket-spacing": [
+			"error",
+			"never"
+		],
+		"arrow-parens": [
+			"error",
+			"as-needed"
+		],
 		"comma-dangle": [
 			"error",
 			"always-multiline"
@@ -17,6 +29,11 @@
 			"error",
 			"tab"
 		],
-		"no-tabs": "off"
+		"no-process-exit": "off",
+		"no-tabs": "off",
+		"object-curly-spacing": [
+			"error",
+			"never"
+		]
 	}
 }
