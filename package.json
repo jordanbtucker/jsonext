@@ -8,7 +8,7 @@
     "dist/"
   ],
   "scripts": {
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "build": "node build.js",
     "lint": "eslint --fix build.js src/",
     "test": "cross-env NODE_ENV=test npm run build && nyc --reporter=html --reporter=text mocha"
