@@ -8,7 +8,8 @@
     "dist/"
   ],
   "scripts": {
-    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm test",
+    "preversion": "npm run lint && npm test",
     "build": "node build.js",
     "lint": "eslint --fix build.js src/",
     "test": "cross-env NODE_ENV=test npm run build && nyc --reporter=html --reporter=text mocha"
