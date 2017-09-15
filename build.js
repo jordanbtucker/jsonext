@@ -84,7 +84,7 @@ function buildBrowserify () {
 		fs.mkdirSync(outDir)
 	}
 
-	browserify(inPath)
+	browserify(inPath, {standalone: 'JSONext'})
 		.transform('babelify', {presets: ['es2015']})
 		.bundle()
 		.pipe(fs.createWriteStream(outPath))
