@@ -49,6 +49,8 @@ function serializeProperty (key, holder) {
 	if (value != null) {
 		if (typeof value.toJSONext === 'function') {
 			value = value.toJSONext(key)
+		} else if(typeof value.toJSON5 === 'function') {
+			value = value.toJSON5(key)
 		} else if (typeof value.toJSON === 'function') {
 			value = value.toJSON(key)
 		}
