@@ -144,7 +144,7 @@ describe('JSONext', function () {
 			})
 
 			it('should parse escaped characters', function () {
-				assert.strictEqual('\b\f\n\r\t\v\0\x0f\u01FF\n\n\a\'\"A', JSONext.parse("'\\b\\f\\n\\r\\t\\v\\0\\x0f\\u01fF\\\n\\\r\n\\a\\'\\\"\\u{000041}'"))
+				assert.strictEqual('\b\f\n\r\t\v\0\x0f\u01FF\a\'\"A', JSONext.parse("'\\b\\f\\n\\r\\t\\v\\0\\x0f\\u01fF\\\n\\\r\n\\\u2028\\\u2029\\a\\'\\\"\\u{000041}'"))
 			})
 
 			it('should parse line and paragraph separators with a warning', function () {
@@ -171,7 +171,7 @@ describe('JSONext', function () {
 			})
 
 			it('should parse escaped characters', function () {
-				assert.strictEqual('\b\f\n\r\t\v\0\x0f\u01FF\n\n\a\'\"A', JSONext.parse('`\\b\\f\\n\\r\\t\\v\\0\\x0f\\u01fF\\\n\\\r\n\\a\\\'\\"\\u{000041}`'))
+				assert.strictEqual('\b\f\n\r\t\v\0\x0f\u01FFa\'\"A', JSONext.parse('`\\b\\f\\n\\r\\t\\v\\0\\x0f\\u01fF\\\n\\\r\n\\\u2028\\\u2029\\a\\\'\\"\\u{000041}`'))
 			})
 
 			it('should parse line breaks', function () {
