@@ -1,6 +1,6 @@
 {
   "name": "jsonext",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "An extension of JSON that supports the Next gen features",
   "main": "lib/",
   "files": [
